@@ -1,0 +1,60 @@
+
+FILE: /var/www/work/silverpop_cli/silverpop-php-client/README.txt
+--------------------------------------------------------------------------------
+FOUND 52 ERROR(S) AFFECTING 50 LINE(S)
+--------------------------------------------------------------------------------
+  23 | ERROR | Line indented incorrectly; expected 0 spaces, found 2
+  24 | ERROR | Line indented incorrectly; expected 2 spaces, found 4
+  30 | ERROR | Line indented incorrectly; expected 2 spaces, found 4
+  32 | ERROR | Line indented incorrectly; expected 0 spaces, found 2
+  33 | ERROR | Line indented incorrectly; expected 2 spaces, found 4
+  35 | ERROR | Line indented incorrectly; expected 0 spaces, found 2
+  36 | ERROR | Line indented incorrectly; expected 2 spaces, found 4
+ 107 | ERROR | The first index in a multi-value array must be on a new line
+ 108 | ERROR | The first index in a multi-value array must be on a new line
+ 111 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 112 | ERROR | The first index in a multi-value array must be on a new line
+ 115 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 116 | ERROR | The first index in a multi-value array must be on a new line
+ 119 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 120 | ERROR | Array indentation error, expected 10 spaces but found 8
+ 121 | ERROR | The first index in a multi-value array must be on a new line
+ 122 | ERROR | The first index in a multi-value array must be on a new line
+ 125 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 126 | ERROR | The first index in a multi-value array must be on a new line
+ 129 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 130 | ERROR | The first index in a multi-value array must be on a new line
+ 133 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 134 | ERROR | Array indentation error, expected 10 spaces but found 8
+ 150 | ERROR | Comment indentation error, expected only 1 spaces
+ 151 | ERROR | Comment indentation error, expected only 3 spaces
+ 152 | ERROR | Comment indentation error, expected only 5 spaces
+ 158 | ERROR | There must be no blank line following an inline comment
+ 167 | ERROR | Comment indentation error, expected only 1 spaces
+ 168 | ERROR | Comment indentation error, expected only 3 spaces
+ 169 | ERROR | Comment indentation error, expected only 5 spaces
+ 170 | ERROR | Comment indentation error, expected only 7 spaces
+ 174 | ERROR | Comment indentation error, expected only 7 spaces
+ 183 | ERROR | There must be no blank line following an inline comment
+ 203 | ERROR | Comment indentation error, expected only 1 spaces
+ 204 | ERROR | Comment indentation error, expected only 3 spaces
+ 205 | ERROR | Comment indentation error, expected only 5 spaces
+ 207 | ERROR | Comment indentation error, expected only 7 spaces
+ 208 | ERROR | Comment indentation error, expected only 9 spaces
+ 213 | ERROR | Comment indentation error, expected only 9 spaces
+ 223 | ERROR | Comment indentation error, expected only 1 spaces
+ 225 | ERROR | Inline comments must end in full-stops, exclamation marks, or
+     |       | question marks
+ 225 | ERROR | There must be no blank line following an inline comment
+ 252 | ERROR | The first index in a multi-value array must be on a new line
+ 253 | ERROR | The first index in a multi-value array must be on a new line
+ 256 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 257 | ERROR | The first index in a multi-value array must be on a new line
+ 260 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 261 | ERROR | The first index in a multi-value array must be on a new line
+ 264 | ERROR | Array indentation error, expected 12 spaces but found 10
+ 265 | ERROR | Array indentation error, expected 10 spaces but found 8
+ 269 | ERROR | Files must end in a single new line character
+ 269 | ERROR | The final ?> should be omitted from all code files
+--------------------------------------------------------------------------------
+
