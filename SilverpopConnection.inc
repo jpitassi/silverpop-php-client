@@ -22,10 +22,10 @@ class SilverpopConnection {
   protected $sessionID;
 
   // A log of all calls made with this instance.
-  protected $sessionLog = array();
+  public $sessionLog = array();
 
   // A log of all <Fault> messages returned through this instance.
-  protected $faultLog = array();
+  public $faultLog = array();
 
   // A boolean flag for whether or not to perform transaction logging.
   public $logTransactions = TRUE;

@@ -84,14 +84,14 @@ class SilverpopAPI {
    * Return the session log from the connection.
    */
   public function getSessionLog() {
-    return $this->connection->session_log;
+    return $this->connection->sessionLog;
   }
 
   /**
    * Return the fault log from the connection.
    */
   public function getFaultLog() {
-    return $this->connection->fault_log;
+    return $this->connection->faultLog;
   }
 
   /**
