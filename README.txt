@@ -96,7 +96,7 @@ II. Usage
     This method can save the user lots of time and space, especially when
     perfoming lengthy XML calls. This method is almost certainly better for
     larger data sets, as you can quickly convert the data from a PHP array to
-    a format digestable by Silverpop::_arrayToXML(). However, complex XML
+    a format digestable by Silverpop::arrayToXML(). However, complex XML
     hierarchies/attributes can be difficult to achieve.
 
     <?php
@@ -140,7 +140,7 @@ II. Usage
     Making sure the data array is perfectly formatted is crucial in getting the
     correct XML output. The SilverpopAPI class with throw a
     SilverpopDataException if your XML data input doesn't match the conventions
-    established in SilverpopAPI::_arrayToXML(). Here are a couple short examples
+    established in SilverpopAPI::arrayToXML(). Here are a couple short examples
     of how to achieve certain XML results using arrays and objects:
 
     <?php
@@ -178,7 +178,7 @@ II. Usage
     //   </Body>
     // </Envelope>
     //
-    // ... Numeric keys are ignored by _arrayToXML(), so they can be used
+    // ... Numeric keys are ignored by arrayToXML(), so they can be used
     // to generate multiple tags with the same name (which wouldn't be possible
     // using just associative arrays in PHP).
 
@@ -205,14 +205,14 @@ II. Usage
     //       <TABLE_ID>86767</TABLE_ID>
     //       <ROWS>
     //         <ROW>
-    //           <COLUMN name="Record Id"><![CDATA[GHbjh73643hsdiy]]></COLUMN>
-    //           <COLUMN name="Purchase Date"><![CDATA[01/09/1975]]></COLUMN>
-    //           <COLUMN name="Product Id"><![CDATA[123454]]></COLUMN>
+    //           <COLUMN name="Record Id">GHbjh73643hsdiy></COLUMN>
+    //           <COLUMN name="Purchase Date">01/09/1975></COLUMN>
+    //           <COLUMN name="Product Id">123454></COLUMN>
     //         </ROW>
     //         <ROW>
-    //           <COLUMN name="Record Id"><![CDATA[WStfh73643hsdgw]]></COLUMN>
-    //           <COLUMN name="Purchase Date"><![CDATA[02/11/1980]]></COLUMN>
-    //           <COLUMN name="Product Id"><![CDATA[45789]]></COLUMN>
+    //           <COLUMN name="Record Id">WStfh73643hsdgw></COLUMN>
+    //           <COLUMN name="Purchase Date">02/11/1980></COLUMN>
+    //           <COLUMN name="Product Id">45789></COLUMN>
     //         </ROW>
     //       </ROWS>
     //     </InsertUpdateRelationalTable>
