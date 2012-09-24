@@ -6,7 +6,7 @@
  */
 
 // Make sure connection class exists.
-require_once 'SilverpopConnection.inc';
+require_once 'SilverpopConnection.php';
 
 // Define an exception class for invalid connections.
 class SilverpopConnectionException extends Exception {}
@@ -115,7 +115,7 @@ class SilverpopAPI {
         // PHP Array.
         case 'array':
           // No need to build a wrapper for this -- arrayToXML will add one.
-          $this->arrayToXML($xml, $body, $call['function'], $call['data']);
+          SilverpopAPI::arrayToXML($xml, $body, $call['function'], $call['data']);
           break;
 
         // Raw XML string.
@@ -153,7 +153,7 @@ class SilverpopAPI {
    *   string: a string value to output between <TAGNAME></TAGNAME>
    *   object: a complex tag with possible attributes/values/children
    */
-  protected function arrayToXML(&$tree, &$parent, $branch, $child) {
+  public static function arrayToXML(&$tree, &$parent, $branch, $child) {
     // Throw exceptions on invalid data tree/parent types.
     if (!is_object($tree) || get_class($tree) != 'DOMDocument') {
       throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Tree is not a valid DOMDocument.');
@@ -176,7 +176,7 @@ class SilverpopAPI {
         }
         else {
           foreach ($child as $new_branch => $new_child) {
-            return $this->arrayToXML($tree, $parent, $new_branch, $new_child);
+            return SilverpopAPI::arrayToXML($tree, $parent, $new_branch, $new_child);
           }
         }
         break;
@@ -189,7 +189,7 @@ class SilverpopAPI {
     switch (gettype($child)) {
       case 'array':
         foreach ($child as $tagname => $node) {
-          $this->arrayToXML($tree, $element, $tagname, $node);
+          SilverpopAPI::arrayToXML($tree, $element, $tagname, $node);
         }
         break;
 
@@ -219,7 +219,7 @@ class SilverpopAPI {
             throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Cannot convert type "' . gettype($child->children) . '" to array.');
           }
           foreach ($child->children as $field => $value) {
-            $this->arrayToXML($tree, $element, $field, $value);
+            SilverpopAPI::arrayToXML($tree, $element, $field, $value);
           }
         }
         break;
