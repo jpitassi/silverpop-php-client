@@ -110,7 +110,7 @@ class SilverpopConnection {
       $fault_tags = $xml->getElementsByTagName('FaultString');
 
       for ($i = 0; $i < $fault_tags->length; $i++) {
-        $this->faultLog[] = $fault_tags->item(0)->nodeValue;
+        $this->faultLog[] = $fault_tags->item($i)->nodeValue;
       }
     }
 
