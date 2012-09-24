@@ -46,7 +46,7 @@ class SilverpopConnection {
    * @return object
    *   a new SilverpopConnection object instance
    */
-  public function __construct($endpoint = SILVERPOP_ENDPOINT, $username = SILVERPOP_USERNAME, $password = SILVERPOP_PASSWORD) {
+  public function __construct($endpoint, $username, $password) {
     $this->endpoint = $endpoint;
     $this->username = $username;
     $this->password = $password;

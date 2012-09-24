@@ -26,8 +26,8 @@ class SilverpopAPI {
   /**
    * Constructor for SilverpopAPI objects.
    */
-  public function __construct() {
-    $this->connection = new SilverpopConnection();
+  public function __construct($endpoint, $username, $password) {
+    $this->connection = new SilverpopConnection($endpoint, $username, $password);
 
     return $this;
   }
