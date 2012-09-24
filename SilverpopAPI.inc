@@ -115,7 +115,7 @@ class SilverpopAPI {
         // PHP Array.
         case 'array':
           // No need to build a wrapper for this -- arrayToXML will add one.
-          $call_xml = $this->arrayToXML($xml, $body, $call['function'], $call['data']);
+          $this->arrayToXML($xml, $body, $call['function'], $call['data']);
           break;
 
         // Raw XML string.
@@ -125,54 +125,71 @@ class SilverpopAPI {
           $function_wrapper->appendChild($function_body);
           $body->appendChild($function_wrapper);
           $call_xml = $call['data'];
+          $function_body->appendXML($call_xml);
           break;
 
         default:
           throw new SilverpopDataException('SilverpopAPI::buildEnvelope(): Cannot convert type "' . gettype($call['data']) . '" to XML.');
           break;
       }
-
-      $function_body->appendXML($call_xml);
     }
 
     // Return envelope as a string of XML.
     return $xml->saveXML();
   }
 
-  /**
+ /**
    * Recursively process an array into a XML tree.
    *
    * @param DOMDocument &$tree
    *   a reference to the DOMDocument being constructed
    * @param DOMElement &$parent
    *   a reference to the current DOM node being processed
-   * @param string $branch
-   *   a <TAGNAME> for the current DOM node being processed
+   * @param mixed $branch
+   *   string: a <TAGNAME> for the current DOM node being processed
+   *   integer: if an integer, the function will skip to the next array level
    * @param mixed $child
-   *   the child nodes of the current element
+   *   array: the child nodes of the current element
+   *   string: a string value to output between <TAGNAME></TAGNAME>
+   *   object: a complex tag with possible attributes/values/children
    */
-  protected function arrayToXML(&$tree, &$parent, $branch, $child) {
-    // Integer indexes implies multiple tags of the same name.
-    if (is_int($branch)) {
-      foreach ($child as $field => $value) {
-        return $this->arrayToXML($tree, $parent, $field, $value);
-      }
+  function arrayToXML(&$tree, &$parent, $branch, $child) {
+    // Throw exceptions on invalid data tree/parent types.
+    if (!is_object($tree) || get_class($tree) != 'DOMDocument') {
+      throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Tree is not a valid DOMDocument.');
     }
-    // Create a new DOM element.
-    $element = $tree->createElement($branch);
+    if (!is_object($parent) || get_class($parent) != 'DOMElement') {
+      throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Parent is not a valid DOMElement.');
+    }
 
-    // Deal with child nodes differently, based on their type.
-    switch (gettype($child)) {
-      // A string is just a normal text node.
+    // Branches can only be strings or integers.
+    switch (gettype($branch)) {
+      // String branches are normal <TAGNAME> elements.
       case 'string':
-        $value = $tree->createCDATASection($child);
-        $element->appendChild($value);
+        $element = $tree->createElement($branch);
         break;
 
-      // An array is an array of child nodes.
+      // Integer branches skip a level.
+      case 'integer':
+        if (!is_array($child)) {
+          throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Could not convert child type "' . gettype($child) . '" to XML.');
+        }
+        else {
+          foreach ($child as $new_branch => $new_child) {
+            return $this->arrayToXML($tree, $parent, $new_branch, $new_child);
+          }
+        }
+        break;
+
+      default:
+        throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Could not convert branch type "' . gettype($branch) . '" to XML.');
+        break;
+    }
+
+    switch (gettype($child)) {
       case 'array':
-        foreach ($child as $field => $value) {
-          $this->arrayToXML($tree, $element, $field, $value);
+        foreach ($child as $tagname => $node) {
+          $this->arrayToXML($tree, $element, $tagname, $node);
         }
         break;
 
@@ -181,7 +198,7 @@ class SilverpopAPI {
         // Element has attribute key=>values.
         if (isset($child->attributes)) {
           if (!is_array($child->attributes)) {
-            throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Cannot convert type "' . gettype($child->attributes) . '" to array.');
+            throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Cannot convert attributes type "' . gettype($child->attributes) . '" to array.');
           }
           foreach ($child->attributes as $attribute_key => $attribute_value) {
             $element->setAttribute($attribute_key, $attribute_value);
@@ -190,10 +207,9 @@ class SilverpopAPI {
 
         // Element has a text value.
         if (isset($child->value)) {
-          if (!is_string($child->value)) {
-            throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Cannot convert type "' . gettype($child->value) . '" to string.');
-          }
-          $value = $tree->createCDATASection($child->value);
+          // Caste values to strings.
+          $child->value = (string) $child->value;
+          $value = $tree->createTextNode($child->value);
           $element->appendChild($value);
         }
 
@@ -208,13 +224,14 @@ class SilverpopAPI {
         }
         break;
 
-      default:
-        // Any other data cannot be converted to XML.
-        throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Cannot convert type "' . gettype($child) . '" to XML.');
-        break;
+      // Convert any other data type to string.
+     default:
+       $child = (string) $child;
+       $value = $tree->createTextNode($child);
+       $element->appendChild($value);
+       break;
     }
 
-    // Add element to tree.
     $parent->appendChild($element);
   }
 }
