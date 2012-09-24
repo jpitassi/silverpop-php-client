@@ -138,7 +138,7 @@ class SilverpopAPI {
     return $xml->saveXML();
   }
 
- /**
+  /**
    * Recursively process an array into a XML tree.
    *
    * @param DOMDocument &$tree
@@ -153,7 +153,7 @@ class SilverpopAPI {
    *   string: a string value to output between <TAGNAME></TAGNAME>
    *   object: a complex tag with possible attributes/values/children
    */
-  function arrayToXML(&$tree, &$parent, $branch, $child) {
+  protected function arrayToXML(&$tree, &$parent, $branch, $child) {
     // Throw exceptions on invalid data tree/parent types.
     if (!is_object($tree) || get_class($tree) != 'DOMDocument') {
       throw new SilverpopDataException('SilverpopAPI::arrayToXML(): Tree is not a valid DOMDocument.');
@@ -225,11 +225,11 @@ class SilverpopAPI {
         break;
 
       // Convert any other data type to string.
-     default:
-       $child = (string) $child;
-       $value = $tree->createTextNode($child);
-       $element->appendChild($value);
-       break;
+      default:
+        $child = (string) $child;
+        $value = $tree->createTextNode($child);
+        $element->appendChild($value);
+        break;
     }
 
     $parent->appendChild($element);
