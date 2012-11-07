@@ -81,6 +81,14 @@ class SilverpopAPI {
   }
 
   /**
+   * Disables logging of API calls.
+   */
+  public function enableLogging() {
+    $this->connection->logTransactions = TRUE;
+    $this->connection->logFaults = TRUE;
+  }
+
+  /**
    * Return the session log from the connection.
    */
   public function getSessionLog() {
@@ -100,7 +108,7 @@ class SilverpopAPI {
    * @return string
    *   XML data packet, ready to be sent to endpoint
    */
-  protected function buildEnvelope() {
+  public function buildEnvelope() {
     // Build DOM elements.
     $xml = new DOMDocument();
     $envelope = $xml->createElement('Envelope');
@@ -110,7 +118,6 @@ class SilverpopAPI {
 
     // Wrap all API calls in envelope.
     foreach ($this->callStack as $call) {
-      $function_body = $xml->createDocumentFragment();
       switch (gettype($call['data'])) {
         // PHP Array.
         case 'array':
@@ -122,10 +129,10 @@ class SilverpopAPI {
         case 'string':
           // Need a wrapper with function name for each call.
           $function_wrapper = $xml->createElement($call['function']);
+          $function_body = $xml->createDocumentFragment();
+          $function_body->appendXML($call['data']);
           $function_wrapper->appendChild($function_body);
           $body->appendChild($function_wrapper);
-          $call_xml = $call['data'];
-          $function_body->appendXML($call_xml);
           break;
 
         default:

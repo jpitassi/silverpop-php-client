@@ -28,10 +28,10 @@ class SilverpopConnection {
   public $faultLog = array();
 
   // A boolean flag for whether or not to perform transaction logging.
-  public $logTransactions = TRUE;
+  public $logTransactions = FALSE;
 
   // A boolean flag for whether or not to perform Silverpop <Fault> logging.
-  public $logFaults = TRUE;
+  public $logFaults = FALSE;
 
   /**
    * Constructor for SilverpopConnection class.
